@@ -15,8 +15,11 @@ async function performSearch() {
 
         // Filter files based on the search term
         var matchingFiles = fileData.filter(function (file) {
-            // Check if the file's content includes the search term within @tags
-            return checkTagInContent(file.content, searchTerm);
+            // Extract substring starting from @tags
+            var tagsSubstring = extractTagsSubstring(file.content);
+
+            // Check if the substring includes the search term
+            return tagsSubstring.includes(`"${searchTerm}"`);
         });
 
         if (matchingFiles.length > 0) {
@@ -44,8 +47,21 @@ async function performSearch() {
     }
 }
 
-function checkTagInContent(content, searchTerm) {
-    // Check if the file's content includes the search term within @tags
-    var tagRegex = new RegExp(`@tags:\\s*\\"${searchTerm}"`);
-    return tagRegex.test(content);
+function extractTagsSubstring(content) {
+    // Find the index of @tags
+    var startIndex = content.indexOf('@tags');
+    if (startIndex !== -1) {
+        // Extract the substring starting from @tags
+        var substring = content.substring(startIndex);
+
+        // Find the index of the closing bracket of @tags
+        var endIndex = substring.indexOf(']');
+        if (endIndex !== -1) {
+            // Include the closing bracket in the substring
+            return substring.substring(0, endIndex + 1);
+        }
+    }
+
+    // Return an empty string if @tags is not found
+    return '';
 }
