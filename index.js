@@ -1,6 +1,3 @@
-// Instantiate a Fuse object
-var fuse;
-
 async function handleKeyPress(event) {
     if (event.keyCode === 13) {
         performSearch();
@@ -16,26 +13,24 @@ async function performSearch() {
         // Fetch data from the server
         var fileData = await fetchData();
 
-        // Create a Fuse instance with the fileData and desired options
-        fuse = new Fuse(fileData, {
-            keys: ['content'], // Specify the keys you want to search on
-            includeScore: true, // Include the search score in the results
+        // Filter files based on the search term
+        var matchingFiles = fileData.filter(function (file) {
+            // Use regular expressions to check if the tag exists and is true
+            var tagRegex = new RegExp('"'+searchTerm+'":\\s*true');
+            return tagRegex.test(file.content);
         });
 
-        // Perform the fuzzy search
-        var results = fuse.search(searchTerm);
-
-        if (results.length > 0) {
+        if (matchingFiles.length > 0) {
             // Display the number of matching results
-            searchResultElement.textContent = `Found ${results.length} matching results`;
+            searchResultElement.textContent = `Found ${matchingFiles.length} matching results`;
 
             // Display a list of matching results
             resultListElement.innerHTML = ''; // Clear previous results
-            results.forEach(function (result) {
-                var nameMatch = result.item.content.match(/@name: "(.*?)"/);
+            matchingFiles.forEach(function (file) {
+                var nameMatch = file.content.match(/@name: "(.*?)"/);
                 var displayName = nameMatch ? nameMatch[1] : 'Unknown';
                 var listItem = document.createElement('li');
-                listItem.textContent = displayName + ` (Score: ${result.score.toFixed(2)})`;
+                listItem.textContent = displayName;
                 listItem.className = 'result-list-item';
                 resultListElement.appendChild(listItem);
             });
