@@ -17,6 +17,21 @@ header {
     font-size: 24px;
     font-weight: bold;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Style for the logo (image) */
+.logo {
+    max-width: 50px; /* Adjust the maximum width of the logo */
+}
+
+/* Style for the text box on the top right */
+.textbox {
+    flex-grow: 1; /* Allow the text box to grow and take available space */
+    text-align: right;
+    margin-right: 10px; /* Adjust margin as needed */
 }
 
 .search-container {
