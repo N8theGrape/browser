@@ -19,7 +19,7 @@ header {
     font-weight: bold;
 }
 
-.titleIcon {
+#titleIcon {
     position: absolute;
     top: 0;
     right: 0;
