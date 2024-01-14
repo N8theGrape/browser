@@ -20,7 +20,6 @@ header {
 }
 
 .titleIcon {
-    width: 12px; /* Set the desired width */
     height: auto; /* Maintain aspect ratio */
     margin-right: 10px; /* Adjust margin as needed */
 }
