@@ -97,12 +97,16 @@
 
                 // Filter files based on the search term
                 var matchingFiles = fileData.filter(function (file) {
-                    return file.content.includes('@tags: { "' + searchTerm + '": true }');
+                    // Use regular expressions to check if the tag exists and is true
+                    var tagRegex = new RegExp('"'+searchTerm+'":\\s*true');
+                    return tagRegex.test(file.content);
                 });
 
                 if (matchingFiles.length > 0) {
                     // Display the @name from the first matching file
-                    searchResultElement.textContent = 'Found matching result: ' + matchingFiles[0].content.match(/@name: "(.*?)"/)[1];
+                    var nameMatch = matchingFiles[0].content.match(/@name: "(.*?)"/);
+                    var displayName = nameMatch ? nameMatch[1] : 'Unknown';
+                    searchResultElement.textContent = 'Found matching result: ' + displayName;
                 } else {
                     searchResultElement.textContent = 'No matching result found.';
                 }
