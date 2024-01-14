@@ -19,6 +19,12 @@ header {
     width: 100%;
 }
 
+.titleIcon {
+    width: 50px; /* Set the desired width */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Adjust margin as needed */
+}
+
 .search-container {
     text-align: center;
     margin-top: 20px;
