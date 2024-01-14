@@ -46,6 +46,6 @@ async function performSearch() {
 
 function checkTagInContent(content, searchTerm) {
     // Check if the file's content includes the search term within @tags
-    var tagRegex = new RegExp(`@tags:\\s*\\["${searchTerm}"`);
+    var tagRegex = new RegExp(`@tags:\\s*\\"${searchTerm}"`);
     return tagRegex.test(content);
 }
