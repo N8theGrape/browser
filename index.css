@@ -22,9 +22,8 @@ header {
 #titleIcon {
     position: absolute;
     top: 0;
-    right: 0;
-    height: 24px; /* Maintain aspect ratio */
-    width: 24px;
+    left: 0;
+    height: auto;
     margin-right: 10px; /* Adjust margin as needed */
 }
 
