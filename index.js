@@ -15,8 +15,8 @@ async function performSearch() {
 
         // Filter files based on the search term
         var matchingFiles = fileData.filter(function (file) {
-            // Check if the file's content includes the search term as a tag
-            return file.content.includes(`@tags: ["${searchTerm}"`);
+            // Check if the file's content includes the search term within @tags
+            return checkTagInContent(file.content, searchTerm);
         });
 
         if (matchingFiles.length > 0) {
@@ -42,4 +42,10 @@ async function performSearch() {
         searchResultElement.textContent = 'Error fetching data.';
         resultListElement.innerHTML = ''; // Clear previous results
     }
+}
+
+function checkTagInContent(content, searchTerm) {
+    // Check if the file's content includes the search term within @tags
+    var tagRegex = new RegExp(`@tags:\\s*\\["${searchTerm}"(?:,\\s*"[^"]*")*\\]`);
+    return tagRegex.test(content);
 }
